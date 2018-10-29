@@ -18,14 +18,13 @@
 
 package com.sasha.adorufu.mod.feature.impl;
 
-import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.adorufu.mod.events.client.ClientPacketRecieveEvent;
-import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.AdorufuModule;
-import com.sasha.adorufu.mod.feature.ModuleInfo;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
-import com.sasha.simplesettings.SettingFlag;
+import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.events.client.ClientPacketRecieveEvent;
+import com.sasha.adorufu.mod.feature.ModuleInfo;
+import com.sasha.adorufu.mod.feature.AdorufuCategory;
+import com.sasha.adorufu.mod.feature.AdorufuModule;
 import net.minecraft.network.play.server.SPacketChat;
 
 import java.util.ArrayList;
@@ -34,7 +33,7 @@ import java.util.concurrent.TimeUnit;
 import static com.sasha.adorufu.mod.feature.impl.ModuleAutoIgnore.stripColours;
 
 @ModuleInfo(description = "Show the estimated time left in queue in chat")
-public class ModuleQueueTime extends AdorufuModule implements SimpleListener, SettingFlag {
+public class ModuleQueueTime extends AdorufuModule implements SimpleListener {
 
     private static long estTime = 10000;
     private static int lastQueuePos = -1;
