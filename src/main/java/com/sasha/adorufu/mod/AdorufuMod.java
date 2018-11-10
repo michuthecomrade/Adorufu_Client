@@ -260,7 +260,7 @@ public class AdorufuMod implements SimpleListener {
         Manager.Module.register(new PortalGodModeFeature());
         Manager.Module.register(new AutoEatFeature());
         Manager.Module.register(new ShulkerSpyFeature());
-        AdorufuPluginLoader.getLoadedPlugins().forEach(AdorufuPlugin::onModuleRegistration);
+        AdorufuPluginLoader.getLoadedPlugins().forEach(AdorufuPlugin::onFeatureRegistration);
     }
 */
 
@@ -268,6 +268,7 @@ public class AdorufuMod implements SimpleListener {
     public void init(FMLInitializationEvent event) {
         logger.info("Adorufu is initialising...");
         logMsg(true, "Registering commands, renderables and impl...");
+        adorufuHUD = new AdorufuHUD();
         scheduler.schedule(() -> {
             try {
                 COMMAND_PROCESSOR = new SimpleCommandProcessor("-");
@@ -276,7 +277,6 @@ public class AdorufuMod implements SimpleListener {
                 this.registerRenderables();
                 EVENT_MANAGER.registerListener(new CommandHandler());
                 //EVENT_MANAGER.registerListener(new Manager.Feature());
-                adorufuHUD = new AdorufuHUD();
                 EVENT_MANAGER.registerListener(adorufuHUD);
                 TPS.INSTANCE = new TPS();
                 EVENT_MANAGER.registerListener(TPS.INSTANCE);
@@ -367,7 +367,7 @@ public class AdorufuMod implements SimpleListener {
                         AdorufuMod.logErr(true, "A severe uncaught exception occurred whilst initialising " + e.getSimpleName() + "!");
                     }
                 });
-        // todo api
+        AdorufuPluginLoader.getLoadedPlugins().forEach(AdorufuPlugin::onFeatureRegistration);
         Manager.Data.settingRegistry.addAll(Manager.Feature.featureRegistry);
     }
 

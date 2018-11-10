@@ -16,13 +16,14 @@
  *
  */
 
-package com.sasha.adorufu.api.adapter;
+package com.sasha.adorufu.mod.feature.impl;
 
-/**
- * Created by Sasha at 4:29 PM on 9/18/2018
- */
-public enum TranslateTypeEnum {
-    FIELD,
-    PARAMETER,
-    FUNCTION
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
+import com.sasha.adorufu.mod.feature.AdorufuCategory;
+
+public class CarpetWalkerFeature extends AbstractAdorufuTogglableFeature {
+
+    public CarpetWalkerFeature() {
+        super("CarpetWalker", AdorufuCategory.MOVEMENT);
+    }
 }

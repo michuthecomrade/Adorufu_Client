@@ -18,34 +18,28 @@
 
 package com.sasha.adorufu.mod.mixin.client;
 
-import com.sasha.adorufu.mod.feature.impl.PigControlFeature;
+import com.sasha.adorufu.mod.feature.impl.CarpetWalkerFeature;
 import com.sasha.adorufu.mod.misc.Manager;
-import net.minecraft.entity.passive.EntityAnimal;
-import net.minecraft.entity.passive.EntityPig;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.world.World;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockCarpet;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(value = EntityPig.class, priority = 999)
-public abstract class MixinEntityPig extends EntityAnimal {
+@Mixin(BlockCarpet.class)
+public class MixinBlockCarpet {
 
-    public MixinEntityPig(World worldIn) {
-        super(worldIn);
-    }
-
-    @Inject(
-            method = "canBeSteered",
-            at = @At("HEAD"),
-            cancellable = true
-    )
-    private void preCanBeSteered(CallbackInfoReturnable<Boolean> cir) {
-        if (this.getControllingPassenger() instanceof EntityPlayer) {
-            if (Manager.Feature.isFeatureEnabled(PigControlFeature.class)) {
-                cir.setReturnValue(true);
-            }
+    @Inject(method = "getBoundingBox",at = @At("HEAD"), cancellable = true)
+    public void getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos, CallbackInfoReturnable<AxisAlignedBB> info) {
+        if (Manager.Feature.isFeatureEnabled(CarpetWalkerFeature.class)) {
+            info.setReturnValue(Block.NULL_AABB);
+            info.cancel();
         }
     }
+
 }
